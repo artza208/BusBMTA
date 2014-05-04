@@ -1,7 +1,6 @@
 package com.busbmta.app;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +32,11 @@ public class CustomListViewAdapter extends ArrayAdapter<String> {
         TextView txtTime = (TextView)row.findViewById(R.id.txtBusTime);
         TextView txtNo = (TextView) row.findViewById(R.id.txtBusNo);
         TextView txtWay = (TextView) row.findViewById(R.id.txtBusWay);
-        txtNo.setTextColor(Color.BLACK);
+
         txtNo.setText(BusNo.get(position));
-        txtTime.setTextColor(Color.BLACK);
+
         txtTime.setText(BusTime.get(position));
-        txtWay.setTextColor(Color.BLACK);
+
         txtWay.setText(BusWay.get(position));
 
         return row;

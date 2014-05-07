@@ -24,6 +24,7 @@ import java.util.Locale;
 public class Location_Manager extends Activity {
     LocationManager lm;
     TextView textLatitude,textLongitude,myAddress;
+    double dlat,dlng;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,29 +90,8 @@ public class Location_Manager extends Activity {
 
         textLatitude.setText(latitude);
         textLongitude.setText(longitude);
-        double dlat = Double.parseDouble(latitude);
-        double dlng = Double.parseDouble(longitude);
-        Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
-
-        try {
-            List<Address> addresses = geocoder.getFromLocation(dlat, dlng, 1);
-
-            if(addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
-                for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                myAddress.setText(strReturnedAddress.toString());
-            }
-            else{
-                myAddress.setText("No Address returned!");
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            myAddress.setText("Canont get Address!");
-        }
+        dlat = Double.parseDouble(latitude);
+        dlng = Double.parseDouble(longitude);
     }
 
     public Location requestUpdatesFromProvider(final String provider
@@ -126,12 +106,37 @@ public class Location_Manager extends Activity {
         return location;
     }
 
+    public void getMylocationAddress(){
+        Locale tLocale = new Locale("th");
+        Geocoder geocoder = new Geocoder(this, tLocale);
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(dlat, dlng, 1);
+
+            if(addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+
+                    strReturnedAddress.append(returnedAddress.getAddressLine(0)).append("\n");
+
+                myAddress.setText(strReturnedAddress.toString());
+            }
+            else{
+                myAddress.setText("No Address returned!");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            myAddress.setText("Canont get Address!");
+        }
+    }
     public final LocationListener listener = new LocationListener() {
         public void onLocationChanged(Location location) {
             textLatitude.setText(String.format("%.7f"
                     , location.getLatitude()));
             textLongitude.setText(String.format("%.7f"
                     ,location.getLongitude()));
+            getMylocationAddress();
         }
 
         public void onProviderDisabled(String provider) { }

@@ -115,11 +115,16 @@ public class Location_Manager extends Activity {
 
             if(addresses != null) {
                 Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+                StringBuilder strReturnedAddress = new StringBuilder();
+                    strReturnedAddress.append(returnedAddress.getAddressLine(0));
+                String temp = strReturnedAddress.toString();
+                temp = temp.replaceAll("^[// 0-9]*","");
+                temp = temp.replaceAll("ถนน","");
+                temp = temp.replaceAll("ซอย","");
+                temp = temp.replaceAll("ที่","");
 
-                    strReturnedAddress.append(returnedAddress.getAddressLine(0)).append("\n");
 
-                myAddress.setText(strReturnedAddress.toString());
+                myAddress.setText(temp.toString());
             }
             else{
                 myAddress.setText("No Address returned!");

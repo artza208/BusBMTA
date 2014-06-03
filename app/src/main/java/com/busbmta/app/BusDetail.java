@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TextView;
 
 /**
@@ -15,6 +16,7 @@ public class BusDetail extends Activity {
     Cursor mCursor;
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.busdetail);
 
         Bundle bundle = getIntent().getExtras();

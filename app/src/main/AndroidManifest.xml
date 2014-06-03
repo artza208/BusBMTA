@@ -14,9 +14,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
         <activity
-            android:name="com.busbmta.app.Location_Manager"
+            android:name="com.busbmta.app.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name="BusDetail"></activity>
+        <activity android:name="MainActivity"></activity>
+        <activity android:name="Location_Manager"></activity>
     </application>
 
 </manifest>

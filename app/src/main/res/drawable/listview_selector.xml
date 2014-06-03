@@ -4,5 +4,5 @@
     <item
         android:state_pressed="true"
         android:drawable="@drawable/listview_selector_pressed" />
-    <item android:drawable="@android:color/white" />
+    <item android:drawable="@color/head" />
 </selector>

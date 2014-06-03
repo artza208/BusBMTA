@@ -8,11 +8,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         rbSearch = (RadioButton)findViewById(R.id.radioSearch);
@@ -66,8 +69,10 @@ public class MainActivity extends ActionBarActivity {
         rbLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intentL = new Intent(getApplicationContext(),Location_Manager.class);
+                startActivityForResult(intentL, 999);
             }
+
         });
 
         //Show all listview
@@ -131,6 +136,36 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data )
+    {
+        super.onActivityResult ( requestCode, resultCode, data );
+        ArrayList<String> BusNoSrcs = new ArrayList<String>();
+        ArrayList<String> BusTimeSrcs = new ArrayList<String>();
+        ArrayList<String> BusWaySrcs = new ArrayList<String>();
+        if ( resultCode == RESULT_OK && requestCode == 999 )
+        {
+            String addressGPS = data.getStringExtra("addressGPS");
+            TextView txtAdd = (TextView) this.findViewById ( R.id.textAdd );
+            txtAdd.setText (addressGPS);
+            mCursor = mDb.rawQuery("SELECT " + MyDbHelper.COL_BUSNO
+                    + ", " + MyDbHelper.COL_BUSTIME
+                    + ", " + MyDbHelper.COL_BUSWAY
+                    + " FROM " + MyDbHelper.TABLE_NAME + " WHERE " + MyDbHelper.COL_BUSSTART + " LIKE '%" + addressGPS.toString()
+                    + "%' OR " + MyDbHelper.COL_BUSEND + " LIKE '%" + addressGPS.toString() + "%' ORDER BY " + MyDbHelper.COL_BUSNO + " ASC", null);
+
+            mCursor.moveToFirst();
+
+            while (!mCursor.isAfterLast()) {
+                BusNoSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSNO)));
+                BusTimeSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTIME)));
+                BusWaySrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSWAY)));
+                mCursor.moveToNext();
+            }
+            ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoSrcs, BusTimeSrcs, BusWaySrcs);
+            listView.setAdapter(adapterDir);
+        }
+
+    }
     public void onPause() {
         super.onPause();
     }

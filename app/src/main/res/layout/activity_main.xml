@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.busbmta.app.MainActivity"
-    android:background="#ffefeff3">
+    android:background="#000000">
 
     <EditText
         android:layout_width="wrap_content"
@@ -17,7 +17,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff"
+        android:hint="ค้นหา..." />
 
     <RadioGroup
         android:layout_width="fill_parent"
@@ -29,17 +31,19 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="ค้นหา"
             android:id="@+id/radioSearch"
             android:enabled="true"
-            android:checked="true" />
+            android:checked="true"
+            android:textColor="#ffffffff" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Look Around"
+            android:text="ผ่านจุดที่อยู่"
             android:id="@+id/radioLook"
-            android:enabled="true" />
+            android:enabled="true"
+            android:textColor="#ffffffff" />
     </RadioGroup>
 
     <ListView
@@ -51,5 +55,14 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:layout_marginTop="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/textAdd"
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

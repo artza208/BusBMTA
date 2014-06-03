@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +28,8 @@ public class Location_Manager extends Activity {
     double dlat,dlng;
 
     public void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location_manager);
-
-        textLatitude = (TextView)findViewById(R.id.textLatitude);
-        textLongitude = (TextView)findViewById(R.id.textLongitude);
-        myAddress = (TextView)findViewById(R.id.textAddress);
 
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
@@ -88,8 +85,6 @@ public class Location_Manager extends Activity {
             longitude = String.format("%.7f", gpsLocation.getLongitude());
         }
 
-        textLatitude.setText(latitude);
-        textLongitude.setText(longitude);
         dlat = Double.parseDouble(latitude);
         dlng = Double.parseDouble(longitude);
     }
@@ -123,24 +118,20 @@ public class Location_Manager extends Activity {
                 temp = temp.replaceAll("ซอย","");
                 temp = temp.replaceAll("ที่","");
 
+                Intent intent = new Intent();
+                intent.putExtra("addressGPS",temp);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
 
-                myAddress.setText(temp.toString());
-            }
-            else{
-                myAddress.setText("No Address returned!");
-            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            myAddress.setText("Canont get Address!");
         }
     }
     public final LocationListener listener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            textLatitude.setText(String.format("%.7f"
-                    , location.getLatitude()));
-            textLongitude.setText(String.format("%.7f"
-                    ,location.getLongitude()));
+
             getMylocationAddress();
         }
 

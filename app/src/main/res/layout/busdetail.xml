@@ -3,7 +3,8 @@
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#000000">
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -12,20 +13,34 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-เลขรถ-"
-                android:id="@+id/txtBusN"
-                android:layout_gravity="center_horizontal"
-                android:textSize="40dp" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/head_color"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-เลขรถ-"
+                    android:id="@+id/txtBusN"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textAlignment="center"
+                    android:gravity="center" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ข้อมูลรถโดยสาร"
                 android:id="@+id/textView4"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="#ffffffff" />
 
             <TableRow
                 android:layout_width="fill_parent"
@@ -34,14 +49,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="เขตการเดินรถ:"
-                    android:id="@+id/textView5" />
+                    android:text="เขตการเดินรถ: "
+                    android:id="@+id/textView5"
+                    android:textStyle="bold"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
-                    android:id="@+id/txtBusZ" />
+                    android:id="@+id/txtBusZ"
+                    android:textColor="#ffffffff" />
 
             </TableRow>
 
@@ -52,14 +70,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="เส้นทาง:"
-                    android:id="@+id/textView6" />
+                    android:text="เส้นทาง: "
+                    android:id="@+id/textView6"
+                    android:textStyle="bold"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
-                    android:id="@+id/txtBusW" />
+                    android:id="@+id/txtBusW"
+                    android:textColor="#ffffffff" />
             </TableRow>
 
             <TableRow
@@ -69,14 +90,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ประเภทรถ:"
-                    android:id="@+id/textView7" />
+                    android:text="ประเภทรถ: "
+                    android:id="@+id/textView7"
+                    android:textStyle="bold"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
-                    android:id="@+id/txtBusTy" />
+                    android:id="@+id/txtBusTy"
+                    android:textColor="#ffffffff" />
             </TableRow>
 
             <TableRow
@@ -86,48 +110,64 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="เวลาให้บริการ:"
-                    android:id="@+id/textView8" />
+                    android:text="เวลาให้บริการ: "
+                    android:id="@+id/textView8"
+                    android:textStyle="bold"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
-                    android:id="@+id/txtBusTi" />
+                    android:id="@+id/txtBusTi"
+                    android:textColor="#ffffffff" />
             </TableRow>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="114dp"
+                android:layout_height="35dp"
                 android:text="แสดงเส้นทาง"
                 android:id="@+id/btnMap"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:background="#ffc9c9c9" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="เส้นทางขาไป"
                 android:id="@+id/textView2"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="#ffffffff"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/txtBusS" />
+                android:id="@+id/txtBusS"
+                android:textColor="#ffffffff" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="เส้นทางขากลับ"
                 android:id="@+id/textView3"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#ffffffff" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/txtBusE" />
+                android:id="@+id/txtBusE"
+                android:textColor="#ffffffff" />
 
         </LinearLayout>
     </ScrollView>

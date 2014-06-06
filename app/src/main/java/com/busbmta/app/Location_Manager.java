@@ -52,10 +52,13 @@ public class Location_Manager extends Activity {
         if(!gpsEnabled) {
             networkEnabled =
                     lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            Intent intent =
+                    new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
             if(!networkEnabled) {
-                Intent intent =
+                Intent intent2 =
                         new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
+                startActivity(intent2);
             }
         }
     }

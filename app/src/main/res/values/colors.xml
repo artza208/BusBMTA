@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="head">#FFFF00</color>
+    <color name="head">#FFFF80</color>
+    <color name="bglistview">#ffc9c9c9</color>
+    <color name="bgbutton">#D5D5D5</color>
 
 </resources>

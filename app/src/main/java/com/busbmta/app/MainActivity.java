@@ -60,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
         rbSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText1.setText("");
                 ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoArr, BusTimeArr, BusWayArr);
                 listView.setAdapter(adapterDir);
             }
@@ -98,11 +99,7 @@ public class MainActivity extends ActionBarActivity {
                 ArrayList<String> BusNoSrc = new ArrayList<String>();
                 ArrayList<String> BusTimeSrc = new ArrayList<String>();
                 ArrayList<String> BusWaySrc = new ArrayList<String>();
-                if (editText1.getText().toString().equals("")) {
-                    ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoArr, BusTimeArr, BusWayArr);
-                    listView.setAdapter(adapterDir);
-                }
-                else {
+
 
                     mCursor = mDb.rawQuery("SELECT " + MyDbHelper.COL_BUSNO
                             + ", " + MyDbHelper.COL_BUSTIME
@@ -120,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                     ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoSrc, BusTimeSrc, BusWaySrc);
                     listView.setAdapter(adapterDir);
-                }
+
             }
         });
 

@@ -10,11 +10,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/txtBusNo"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textIsSelectable="false"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/txtBusWay"
-        android:layout_alignStart="@+id/txtBusWay" />
+        android:layout_alignStart="@+id/txtBusWay"
+        android:textColor="#ff0099cc"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,13 +25,12 @@
         android:text="Small Text"
         android:id="@+id/txtBusTime"
         android:layout_gravity="right"
-        android:textSize="15dp"
-        android:textColor="#828282"
+        android:textSize="12dp"
+        android:textColor="#ff000000"
         android:textStyle="italic"
-        android:layout_marginRight="18dp"
+        android:layout_marginRight="20dp"
         android:layout_alignBottom="@+id/txtBusNo"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toLeftOf="@+id/imageView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,10 +38,22 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txtBusWay"
-        android:textSize="15dp"
-        android:textColor="#828282"
+        android:textSize="12dp"
+        android:textColor="#ff000000"
         android:layout_marginLeft="17dp"
         android:layout_below="@+id/txtBusTime"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/arrows"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignTop="@+id/txtBusTime"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/txtBusWay" />
+
 </RelativeLayout>

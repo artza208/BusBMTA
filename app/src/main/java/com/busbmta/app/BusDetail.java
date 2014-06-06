@@ -1,10 +1,14 @@
 package com.busbmta.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -29,6 +33,16 @@ public class BusDetail extends Activity {
         TextView txtBusTi = (TextView)findViewById(R.id.txtBusTi);
         TextView txtBusS = (TextView)findViewById(R.id.txtBusS);
         TextView txtBusE = (TextView)findViewById(R.id.txtBusE);
+
+       Button btnMap = (Button)findViewById(R.id.btnMap);
+       btnMap.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(Intent.ACTION_VIEW);
+               intent.setData(Uri.parse(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSMAP))));
+               startActivity(Intent.createChooser(intent, "Open with"));
+           }
+       });
 
         mHelper = new MyDbHelper(this);
         mDb = mHelper.getWritableDatabase();

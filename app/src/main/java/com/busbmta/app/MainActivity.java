@@ -1,5 +1,7 @@
 package com.busbmta.app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -26,8 +29,13 @@ public class MainActivity extends ActionBarActivity {
     ArrayList<String> BusNoArr = new ArrayList<String>();
     ArrayList<String> BusTimeArr = new ArrayList<String>();
     ArrayList<String> BusWayArr = new ArrayList<String>();
-    EditText editText1;
-    RadioButton rbSearch,rbLook;
+    EditText editText1,editText2;
+    RadioButton rbSearch,rbLook,rbSE;
+    TextView txtMain;
+
+    private static final String[] BusWord = new String[] {
+            "กรมการรักษาดินแดน", "กรมที่ดิน", "Italy", "Germany", "Spain", "Thailand", "Taiwan"
+    };
 
 
     @Override
@@ -38,7 +46,15 @@ public class MainActivity extends ActionBarActivity {
 
         rbSearch = (RadioButton)findViewById(R.id.radioSearch);
         rbLook = (RadioButton)findViewById(R.id.radioLook);
+        rbSE = (RadioButton)findViewById(R.id.radioSE);
         listView = (ListView)findViewById(R.id.listView1);
+        txtMain = (TextView)findViewById(R.id.textMain);
+
+final AutoCompleteTextView autoCompleteTextView1 = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, BusWord);
+
+        autoCompleteTextView1.setAdapter(adapter);
 
         mHelper = new MyDbHelper(this);
         mDb = mHelper.getWritableDatabase();
@@ -60,7 +76,12 @@ public class MainActivity extends ActionBarActivity {
         rbSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editText2.setVisibility(View.GONE);
                 editText1.setText("");
+                editText2.setText("a");
+                editText1.setHint(R.string.search_word);
+                txtMain.setText("ค้นหาจากสายรถเมล์");
                 ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoArr, BusTimeArr, BusWayArr);
                 listView.setAdapter(adapterDir);
             }
@@ -70,18 +91,31 @@ public class MainActivity extends ActionBarActivity {
         rbLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtMain.setText("ค้นหาสายรถเมล์จากตำแหน่งปัจจุบัน");
                 Intent intentL = new Intent(getApplicationContext(),Location_Manager.class);
                 startActivityForResult(intentL, 999);
             }
 
         });
 
+        // radio box Start-End check
+        rbSE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtMain.setText("ค้นหาสายรถเมล์จากต้นทาง - ปลายทาง");
+                editText2.setText("");
+                editText2.setVisibility(View.VISIBLE);
+                editText1.setHint(R.string.search_start);
+            }
+        });
         //Show all listview
         ArrayAdapter<String> adapterDir = new CustomListViewAdapter(this, android.R.layout.simple_list_item_1, BusNoArr, BusTimeArr, BusWayArr);
         listView.setAdapter(adapterDir);
 
         editText1 = (EditText)findViewById(R.id.editText1);
-
+        editText2 = (EditText)findViewById(R.id.editText2);
+        editText2.setText("a");
+        editText2.setVisibility(View.GONE);
         //Event text change
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,6 +130,43 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                editText2.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        ArrayList<String> BusNoSrc = new ArrayList<String>();
+                        ArrayList<String> BusTimeSrc = new ArrayList<String>();
+                        ArrayList<String> BusWaySrc = new ArrayList<String>();
+
+                        mCursor = mDb.rawQuery("SELECT " + MyDbHelper.COL_BUSNO
+                                + ", " + MyDbHelper.COL_BUSTIME
+                                + ", " + MyDbHelper.COL_BUSWAY
+                                + " FROM " + MyDbHelper.TABLE_NAME + " WHERE " + MyDbHelper.COL_BUSSTART + " LIKE '%" + editText1.getText().toString()
+                                + "%' AND " + MyDbHelper.COL_BUSSTART + " LIKE '%" + editText2.getText().toString() + "%' ORDER BY " + MyDbHelper.COL_BUSNO + " ASC", null);
+
+                        mCursor.moveToFirst();
+
+                        while (!mCursor.isAfterLast()) {
+                            BusNoSrc.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSNO)));
+                            BusTimeSrc.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTIME)));
+                            BusWaySrc.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSWAY)));
+                            mCursor.moveToNext();
+                        }
+                        ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoSrc, BusTimeSrc, BusWaySrc);
+                        listView.setAdapter(adapterDir);
+
+                    }
+                });
+
                 ArrayList<String> BusNoSrc = new ArrayList<String>();
                 ArrayList<String> BusTimeSrc = new ArrayList<String>();
                 ArrayList<String> BusWaySrc = new ArrayList<String>();
@@ -128,6 +199,8 @@ public class MainActivity extends ActionBarActivity {
 
                 Intent intent = new Intent(getApplicationContext(),BusDetail.class);
                 intent.putExtra("BusId",mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSNO)));
+                intent.putExtra("WordSearch",editText1.getText().toString());
+                intent.putExtra("WordSearch2",editText2.getText().toString());
                 startActivity(intent);
             }
         });
@@ -136,30 +209,48 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult ( int requestCode, int resultCode, Intent data )
     {
         super.onActivityResult ( requestCode, resultCode, data );
-        ArrayList<String> BusNoSrcs = new ArrayList<String>();
-        ArrayList<String> BusTimeSrcs = new ArrayList<String>();
-        ArrayList<String> BusWaySrcs = new ArrayList<String>();
+        final TextView txtAdd = (TextView) this.findViewById ( R.id.textAdd );
+        final ArrayList<String> BusNoSrcs = new ArrayList<String>();
+        final ArrayList<String> BusTimeSrcs = new ArrayList<String>();
+        final ArrayList<String> BusWaySrcs = new ArrayList<String>();
         if ( resultCode == RESULT_OK && requestCode == 999 )
         {
-            String addressGPS = data.getStringExtra("addressGPS");
-            TextView txtAdd = (TextView) this.findViewById ( R.id.textAdd );
-            txtAdd.setText (addressGPS);
-            mCursor = mDb.rawQuery("SELECT " + MyDbHelper.COL_BUSNO
-                    + ", " + MyDbHelper.COL_BUSTIME
-                    + ", " + MyDbHelper.COL_BUSWAY
-                    + " FROM " + MyDbHelper.TABLE_NAME + " WHERE " + MyDbHelper.COL_BUSSTART + " LIKE '%" + addressGPS.toString()
-                    + "%' OR " + MyDbHelper.COL_BUSEND + " LIKE '%" + addressGPS.toString() + "%' ORDER BY " + MyDbHelper.COL_BUSNO + " ASC", null);
+            final String addressGPS1 = data.getStringExtra("addressGPS1");
+            String addressGPS2 = data.getStringExtra("addressGPS2");
+            String addressGPS3 = data.getStringExtra("addressGPS3");
+            final String[] option={addressGPS1,addressGPS2,addressGPS3};
 
-            mCursor.moveToFirst();
+            //create dialog
+            ArrayAdapter<String> adpAddress = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,option);
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("Select Address");
+            builder.setAdapter(adpAddress,new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    txtAdd.setText(option[which]);
+                    mCursor = mDb.rawQuery("SELECT " + MyDbHelper.COL_BUSNO
+                            + ", " + MyDbHelper.COL_BUSTIME
+                            + ", " + MyDbHelper.COL_BUSWAY
+                            + " FROM " + MyDbHelper.TABLE_NAME + " WHERE " + MyDbHelper.COL_BUSSTART + " LIKE '%" + option[which].toString()
+                            + "%' OR " + MyDbHelper.COL_BUSEND + " LIKE '%" + option[which].toString() + "%' ORDER BY " + MyDbHelper.COL_BUSNO + " ASC", null);
 
-            while (!mCursor.isAfterLast()) {
-                BusNoSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSNO)));
-                BusTimeSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTIME)));
-                BusWaySrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSWAY)));
-                mCursor.moveToNext();
-            }
-            ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoSrcs, BusTimeSrcs, BusWaySrcs);
-            listView.setAdapter(adapterDir);
+                    mCursor.moveToFirst();
+
+                    while (!mCursor.isAfterLast()) {
+                        BusNoSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSNO)));
+                        BusTimeSrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTIME)));
+                        BusWaySrcs.add(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSWAY)));
+                        mCursor.moveToNext();
+                    }
+                    ArrayAdapter<String> adapterDir = new CustomListViewAdapter(MainActivity.this, android.R.layout.simple_list_item_1, BusNoSrcs, BusTimeSrcs, BusWaySrcs);
+                    listView.setAdapter(adapterDir);
+                }
+
+
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+
         }
 
     }

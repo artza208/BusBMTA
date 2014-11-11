@@ -113,16 +113,38 @@ public class Location_Manager extends Activity {
 
             if(addresses != null) {
                 Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder();
-                    strReturnedAddress.append(returnedAddress.getAddressLine(0));
-                String temp = strReturnedAddress.toString();
-                temp = temp.replaceAll("^[// 0-9]*","");
-                temp = temp.replaceAll("ถนน","");
-                temp = temp.replaceAll("ซอย","");
-                temp = temp.replaceAll("ที่","");
+                StringBuilder strReturnedAddress1 = new StringBuilder();
+                strReturnedAddress1.append(returnedAddress.getAddressLine(0));
+                String temp1 = strReturnedAddress1.toString();
+                temp1 = temp1.replaceAll("^[// 0-9 ,]*","");
+                temp1 = temp1.replaceAll("ถนน","");
+                temp1 = temp1.replaceAll("ซอย","");
+                temp1 = temp1.replaceAll("ที่","");
+
+                StringBuilder strReturnedAddress2 = new StringBuilder();
+                strReturnedAddress2.append(returnedAddress.getAddressLine(1));
+                String tempA = strReturnedAddress2.toString();
+                String temp2,temp3;
+                if(tempA.contains("เขต")) {
+                    tempA = tempA.replaceAll("แขวง ","");
+                    tempA = tempA.replaceAll("เขต","");
+
+                    String arr[] = tempA.split(" ");
+
+                    temp2 = arr[0];
+                    temp3 = arr[1];
+
+                }
+                else
+                {
+                    temp2 = tempA;
+                    temp3 = "";
+                }
 
                 Intent intent = new Intent();
-                intent.putExtra("addressGPS",temp);
+                intent.putExtra("addressGPS1",temp1);
+                intent.putExtra("addressGPS2",temp2);
+                intent.putExtra("addressGPS3",temp3);
                 setResult(RESULT_OK, intent);
                 finish();
             }

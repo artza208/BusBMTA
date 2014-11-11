@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\classes-edfd58f41412fc67261c6eb2c59f28c38146b014.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.11\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\internal_impl-19.1.0-52162c03d6908b4d19c49f816aeabdecd695a8c2.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\19.1.0\libs\internal_impl-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e898b3d4e2733017f23894a563ea4f5b3aca72bc"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\internal_impl-20.0.0-9f2b50d954c1d9f644230ef44c6b9aea25c815c7.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\classes-a1606310ebac87262ca6bdfdf9d7d840903e22b3.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\classes-1ecf8ea90ec01cc5eca846211fff366fcc3de9db.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\support-annotations-20.0.0-b4a33be0998bac3437d7cc0e8596a94d46a70c47.jar"
+        jar="C:\Program Files (x86)\Android\android-studio1\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\pre-dexed\release\classes-637fb95d86126bbf37d21d1f85132a460fdc9fd7.jar"
+        jar="C:\Users\apiwat\Desktop\BusBMTA\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="c654eae911e6b937a56f14ba353baa95a82adb9c"/>
+
+</pre-dex-items>

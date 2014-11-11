@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,6 +26,8 @@ public class BusDetail extends Activity {
 
         Bundle bundle = getIntent().getExtras();
         String BusID = bundle.getString("BusId");
+        String wordSearch = getIntent().getStringExtra("WordSearch");
+        String wordSearch2 = getIntent().getStringExtra("WordSearch2");
 
         TextView txtBusN = (TextView)findViewById(R.id.txtBusN);
         TextView txtBusZ = (TextView)findViewById(R.id.txtBusZ);
@@ -53,8 +56,20 @@ public class BusDetail extends Activity {
         txtBusW.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSWAY)));
         txtBusTy.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTYPE)));
         txtBusTi.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSTIME)));
-        txtBusS.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSSTART)));
-        txtBusE.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSEND)));
+        //txtBusS.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSSTART)));
+        //txtBusE.setText(mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSEND)));
+
+        String StrBusS = mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSSTART));
+        String StrBusE = mCursor.getString(mCursor.getColumnIndex(MyDbHelper.COL_BUSEND));
+
+        StrBusS = StrBusS.replaceAll(wordSearch,"<font color='#FF0000'>" + wordSearch + "</font>");
+        StrBusE = StrBusE.replaceAll(wordSearch,"<font color='#FF0000'>" + wordSearch + "</font>");
+
+        StrBusS = StrBusS.replaceAll(wordSearch2,"<font color='#0000FF'>" + wordSearch2 + "</font>");
+        StrBusE = StrBusE.replaceAll(wordSearch2,"<font color='#0000FF'>" + wordSearch2 + "</font>");
+
+        txtBusS.setText(Html.fromHtml(StrBusS));
+        txtBusE.setText(Html.fromHtml(StrBusE));
     }
 
     public void onPause() {

@@ -4,5 +4,7 @@
     <string name="app_name">BusBKK</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="search_word">ค้นหา...</string>
+    <string name="search_start">ต้นทาง...</string>
 
 </resources>
